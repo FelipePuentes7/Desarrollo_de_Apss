@@ -1,0 +1,7 @@
+{
+  "name": "Camara_ionic_v2",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
