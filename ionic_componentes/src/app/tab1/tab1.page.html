@@ -1,0 +1,1129 @@
+<!-- Header Principal con Toolbar y Buscador -->
+<ion-header [translucent]="true" class="ion-no-border header-custom">
+  <ion-toolbar color="primary">
+    <ion-title>
+      <div class="toolbar-title-container">
+        <ion-icon name="layers-outline"></ion-icon>
+        <span>Demostración de Componentes</span>
+        <ion-badge color="light" class="header-badge">37 Componentes</ion-badge>
+      </div>
+    </ion-title>
+  </ion-toolbar>
+
+  <!-- Componente Searchbar en la cabecera para filtrar -->
+  <ion-toolbar color="primary">
+    <ion-searchbar [(ngModel)]="searchQuery" placeholder="Filtrar componente interactivo..." [debounce]="150"
+      animated="true" show-clear-button="focus" class="custom-searchbar"></ion-searchbar>
+  </ion-toolbar>
+
+  <!-- Componente Segment para filtrar por categorías -->
+  <ion-toolbar color="primary" class="segment-toolbar">
+    <ion-segment [(ngModel)]="activeCategory" [scrollable]="true" mode="md" class="custom-segment">
+      <ion-segment-button value="all">
+        <ion-label>Todos (37)</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="formularios">
+        <ion-label>Formularios</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="navegacion">
+        <ion-label>Navegación</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="feedback">
+        <ion-label>Feedback</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="datos">
+        <ion-label>Estructura & Datos</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="main-content ion-padding-bottom">
+  <!-- 27. REFRESHER INTERACTIVO (Desliza hacia abajo para probarlo) -->
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content pullingIcon="chevron-down-circle-outline" pullingText="Desliza para recargar..."
+      refreshingSpinner="circles" refreshingText="Recargando componentes..."></ion-refresher-content>
+  </ion-refresher>
+
+  <!-- Resumen de bienvenida para el profesor -->
+  <div class="intro-box ion-padding">
+    <h2>🧪 Laboratorio de Componentes Ionic</h2>
+  </div>
+
+  <div class="components-container">
+
+    <!-- ==================== 1. ACCORDION ==================== -->
+    @if (isVisible('accordion', 'datos')) {
+    <div class="demo-card">
+      <div class="demo-header">
+        <div class="demo-title">
+          <span class="comp-number">1</span>
+          <strong>Accordion</strong>
+          <code>&lt;ion-accordion&gt;</code>
+        </div>
+        <ion-badge color="primary">Estructura & Datos</ion-badge>
+      </div>
+      <div class="demo-body">
+        <ion-accordion-group [value]="accordionSelected">
+          <ion-accordion value="first">
+            <ion-item slot="header" color="light">
+              <ion-icon name="albums-outline" slot="start"></ion-icon>
+              <ion-label>Sección 1: ¿Qué es Ionic?</ion-label>
+            </ion-item>
+            <div class="ion-padding accordion-content" slot="content">
+              Ionic es un kit de herramientas UI de código abierto para crear aplicaciones móviles y web de alto
+              rendimiento.
+            </div>
+          </ion-accordion>
+
+          <ion-accordion value="second">
+            <ion-item slot="header" color="light">
+              <ion-icon name="sparkles-outline" slot="start"></ion-icon>
+              <ion-label>Sección 2: Ventajas del Framework</ion-label>
+            </ion-item>
+            <div class="ion-padding accordion-content" slot="content">
+              Permite desarrollar una sola base de código para iOS, Android y Web con componentes nativos estéticos.
+            </div>
+          </ion-accordion>
+        </ion-accordion-group>
+      </div>
+    </div>
+    }
+
+    <!-- ==================== 2. ACTION SHEET ==================== -->
+    @if (isVisible('action sheet', 'feedback')) {
+    <div class="demo-card">
+      <div class="demo-header">
+        <div class="demo-title">
+          <span class="comp-number">2</span>
+          <strong>Action Sheet</strong>
+          <code>&lt;ion-action-sheet&gt;</code>
+        </div>
+        <ion-badge color="tertiary">Feedback</ion-badge>
+      </div>
+      <div class="demo-body">
+        <p class="demo-desc">Menú modal emergente de opciones del sistema:</p>
+        <ion-button expand="block" color="tertiary" (click)="isActionSheetOpen = true">
+          <ion-icon slot="start" name="options-outline"></ion-icon>
+          Abrir Action Sheet
+        </ion-button>
+        <ion-action-sheet [isOpen]="isActionSheetOpen" header="Opciones de Publicación" [buttons]="actionSheetButtons"
+          (didDismiss)="isActionSheetOpen = false"></ion-action-sheet>
+      </div>
+    </div>
+    }
+
+    <!-- ==================== 3. ALERT ==================== -->
+    @if (isVisible('alert', 'feedback')) {
+    <div class="demo-card">
+      <div class="demo-header">
+        <div class="demo-title">
+          <span class="comp-number">3</span>
+          <strong>Alert</strong>
+          <code>&lt;ion-alert&gt;</code>
+        </div>
+        <ion-badge color="warning">Feedback</ion-badge>
+      </div>
+      <div class="demo-body">
+        <p class="demo-desc">Cuadro de diálogo de confirmación y advertencias:</p>
+        <ion-button expand="block" color="warning" (click)="isAlertOpen = true">
+          <ion-icon slot="start" name="alert-circle-outline"></ion-icon>
+          Mostrar Cuadro de Alerta
+        </ion-button>
+        <ion-alert [isOpen]="isAlertOpen" header="Atención Profesor" subHeader="Demostración de IonAlert"
+          message="Este es un cuadro de diálogo nativo interactivo con botones de acción." [buttons]="alertButtons"
+          (didDismiss)="isAlertOpen = false"></ion-alert>
+      </div>
+    </div>
+    }
+
+    <!-- ==================== 4. BADGE ==================== -->
+    @if (isVisible('badge', 'datos')) {
+    <div class="demo-card">
+      <div class="demo-header">
+        <div class="demo-title">
+          <span class="comp-number">4</span>
+          <strong>Badge</strong>
+          <code>&lt;ion-badge&gt;</code>
+        </div>
+        <ion-badge color="success">Estructura & Datos</ion-badge>
+      </div>
+      <div class="demo-body">
+        <p class="demo-desc">Insignias numéricas y de estado con colores:</p>
+        <div class="badge-row">
+          <ion-badge color="primary">Mensajes {{ badgeCount }}</ion-badge>
+          <ion-badge color="secondary">Pendientes 12</ion-badge>
+          <ion-badge color="success">Activo</ion-badge>
+          <ion-badge color="warning">99+</ion-badge>
+          <ion-badge color="danger">Urgente</ion-badge>
+        </div>
+        <ion-item lines="none" class="badge-item ion-margin-top">
+          <ion-icon slot="start" name="notifications-outline" color="primary"></ion-icon>
+          <ion-label>Notificaciones recibidas</ion-label>
+          <ion-badge slot="end" color="danger">{{ badgeCount }}</ion-badge>
+        </ion-item>
+      </div>
+    </div>
+    }
+
+    <!-- ==================== 5. BREADCRUMBS ==================== -->
+    @if (isVisible('breadcrumbs', 'navegacion')) {
+    <div class="demo-card">
+      <div class="demo-header">
+        <div class="demo-title">
+          <span class="comp-number">5</span>
+          <strong>Breadcrumbs</strong>
+          <code>&lt;ion-breadcrumbs&gt;</code>
+        </div>
+        <ion-badge color="secondary">Navegación</ion-badge>
+      </div>
+      <div class="demo-body">
+        <p class="demo-desc">Navegación de migas de pan:</p>
+        <ion-breadcrumbs>
+          <ion-breadcrumb href="#inicio">
+            <ion-icon slot="start" name="home-outline"></ion-icon>
+            Inicio
+          </ion-breadcrumb>
+          <ion-breadcrumb href="#curso">
+            <ion-icon slot="start" name="school-outline"></ion-icon>
+            Móviles
+          </ion-breadcrumb>
+          <ion-breadcrumb href="#ionic">Ionic 9</ion-breadcrumb>
+          <ion-breadcrumb>Componentes</ion-breadcrumb>
+        </ion-breadcrumbs>
+      </div>
+    </div>
+    }
+
+    <!-- ==================== 6. BUTTON ==================== -->
+    @if (isVisible('button', 'formularios')) {
+    <div class="demo-card">
+      <div class="demo-header">
+        <div class="demo-title">
+          <span class="comp-number">6</span>
+          <strong>Button</strong>
+          <code>&lt;ion-button&gt;</code>
+        </div>
+        <ion-badge color="primary">Formularios</ion-badge>
+      </div>
+      <div class="demo-body">
+        <p class="demo-desc">Variedad de botones con formas, estados e iconos interactivos:</p>
+        <div class="button-grid">
+          <ion-button color="primary" (click)="incrementClick()">
+            <ion-icon slot="start" name="add-outline"></ion-icon>
+            Clics: {{ buttonClickCount }}
+          </ion-button>
+          <ion-button color="secondary" fill="outline">
+            <ion-icon slot="start" name="star-outline"></ion-icon>
+            Outline
+          </ion-button>
+          <ion-button color="success" shape="round">
+            <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon>
+            Redondeado
+          </ion-button>
+          <ion-button color="danger" fill="clear">
+            <ion-icon slot="start" name="trash-outline"></ion-icon>
+            Clear
+          </ion-button>
+        </div>
+        <ion-button expand="block" color="tertiary" class="ion-margin-top">
+          <ion-icon slot="start" name="flash-outline"></ion-icon>
+          Botón expand="block"
+        </ion-button>
+      </div>
+    </div>
+    }
+
+    <!-- ==================== 7. CARD ==================== -->
+    @if (isVisible('card', 'datos')) {
+    <div class="demo-card">
+      <div class="demo-header">
+        <div class="demo-title">
+          <span class="comp-number">7</span>
+          <strong>Card</strong>
+          <code>&lt;ion-card&gt;</code>
+        </div>
+        <ion-badge color="medium">Estructura & Datos</ion-badge>
+      </div>
+      <div class="demo-body">
+        <ion-card class="inner-sample-card">
+          <ion-card-header>
+            <ion-card-subtitle>Tarjeta de Presentación</ion-card-subtitle>
+            <ion-card-title>Framework Ionic v9</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            Contenedor visual estructurado que organiza información, imágenes, textos y botones en un solo bloque con
+            diseño responsive.
+            <ion-button fill="outline" size="small" color="primary" class="ion-margin-top"
+              (click)="showToast('¡Botón de la Card presionado!')">
+              Probar Acción
+            </ion-button>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </div>
+    }
+
+    <!-- ==================== 8. CHECKBOX ==================== -->
+    @if (isVisible('checkbox', 'formularios')) {
+    <div class="demo-card">
+      <div class="demo-header">
+        <div class="demo-title">
+          <span class="comp-number">8</span>
+          <strong>Checkbox</strong>
+          <code>&lt;ion-checkbox&gt;</code>
+        </div>
+        <ion-badge color="success">Formularios</ion-badge>
+      </div>
+      <div class="demo-body">
+        <p class="demo-desc">Casillas de verificación con enlace bidireccional (ngModel):</p>
+        <ion-list [inset]="true" class="inner-list">
+          <ion-item>
+            <ion-checkbox [(ngModel)]="checkboxMultiple.html" justify="space-between">HTML5 & CSS3</ion-checkbox>
+          </ion-item>
+          <ion-item>
+            <ion-checkbox [(ngModel)]="checkboxMultiple.typescript" justify="space-between"
+              color="secondary">TypeScript</ion-checkbox>
+          </ion-item>
+          <ion-item>
+            <ion-checkbox [(ngModel)]="checkboxMultiple.ionic" justify="space-between" color="primary">Ionic
+              Framework</ion-checkbox>
+          </ion-item>
+          <ion-item>
+            <ion-checkbox [(ngModel)]="checkboxMultiple.capacitor" justify="space-between" color="tertiary">Capacitor
+              Native</ion-checkbox>
+          </ion-item>
+        </ion-list>
+      </div>
+    </div>
+    }
+
+    <!-- ==================== 9. CHIP ==================== -->
+    @if (isVisible('chip', 'datos')) {
+    <div class="demo-card">
+      <div class="demo-header">
+        <div class="demo-title">
+          <span class="comp-number">9</span>
+          <strong>Chip</strong>
+          <code>&lt;ion-chip&gt;</code>
+        </div>
+        <ion-badge color="tertiary">Estructura & Datos</ion-badge>
+      </div>
+      <div class="demo-body">
+        <p class="demo-desc">Chips interactivos con avatar, iconos y botón de cierre:</p>
+        <div class="chips-container">
+          <ion-chip color="primary" [outline]="activeChip !== 'Ionic v9'" (click)="activeChip = 'Ionic v9'">
+            <ion-icon name="sparkles-outline"></ion-icon>
+            <ion-label>Ionic v9</ion-label>
+          </ion-chip>
+          <ion-chip color="secondary" [outline]="activeChip !== 'Angular'" (click)="activeChip = 'Angular'">
+            <ion-icon name="code-slash-outline"></ion-icon>
+            <ion-label>Angular</ion-label>
+          </ion-chip>
+          <ion-chip color="success" [outline]="activeChip !== 'TypeScript'" (click)="activeChip = 'TypeScript'">
+            <ion-icon name="checkmark-circle-outline"></ion-icon>
+            <ion-label>TypeScript</ion-label>
+          </ion-chip>
+          <ion-chip color="danger">
+            <ion-avatar>
+              <img alt="Avatar" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+            </ion-avatar>
+            <ion-label>Usuario</ion-label>
+            <ion-icon name="close-outline"></ion-icon>
+          </ion-chip>
+        </div>
+        <ion-note class="active-note">Chip seleccionado: <strong>{{ activeChip }}</strong></ion-note>
+      </div>
+    </div>
+    }
+
+    <!-- ==================== 10. CONTENT ==================== -->
+    @if (isVisible('content', 'navegacion')) {
+    <div class="demo-card">
+      <div class="demo-header">
+        <div class="demo-title">
+          <span class="comp-number">10</span>
+          <strong>Content</strong>
+          <code>&lt;ion-content&gt;</code>
+        </div>
+        <ion-badge color="primary">Navegación</ion-badge>
+      </div>
+      <div class="demo-body">
+        <p class="demo-desc">El contenedor <code>&lt;ion-content&gt;</code> es el cuerpo principal donde reside toda
+          esta pantalla. Maneja el scroll nativo, fullscreen y el rebote inercial.</p>
+        <div class="content-mockup">
+          <ion-icon name="document-text-outline" class="big-icon"></ion-icon>
+          <span>&lt;ion-content [fullscreen]="true"&gt; Activo en esta vista</span>
+        </div>
+      </div>
+    </div>
+    }
+
+    <!-- ==================== 11. DATETIME ==================== -->
+    @if (isVisible('datetime', 'formularios')) {
+    <div class="demo-card">
+      <div class="demo-header">
+        <div class="demo-title">
+          <span class="comp-number">11</span>
+          <strong>Date & Time Pickers</strong>
+          <code>&lt;ion-datetime&gt;</code>
+        </div>
+        <ion-badge color="danger">Formularios</ion-badge>
+      </div>
+      <div class="demo-body">
+        <p class="demo-desc">Selector interactivo de fecha y hora nativo:</p>
+        <div class="datetime-wrapper">
+          <ion-datetime [(ngModel)]="selectedDateTime" presentation="date" [showDefaultButtons]="true" size="cover"
+            class="custom-datetime"></ion-datetime>
+        </div>
+        <ion-note class="active-note ion-margin-top">
+          Fecha seleccionada: <strong>{{ selectedDateTime | date:'mediumDate' }}</strong>
+        </ion-note>
+      </div>
+    </div>
+    }
+
+    <!-- ==================== 12. FLOATING ACTION BUTTON (FAB) ==================== -->
+    @if (isVisible('fab', 'formularios')) {
+    <div class="demo-card">
+      <div class="demo-header">
+        <div class="demo-title">
+          <span class="comp-number">12</span>
+          <strong>Floating Action Button (FAB)</strong>
+          <code>&lt;ion-fab&gt;</code>
+        </div>
+        <ion-badge color="success">Formularios</ion-badge>
+      </div>
+      <div class="demo-body">
+        <p class="demo-desc">Botón flotante con submenú desplegable (mira la esquina inferior derecha o interactúa
+          aquí):</p>
+        <div class="fab-container-demo">
+          <ion-fab-button color="primary" (click)="showToast('¡FAB presionado!')">
+            <ion-icon name="add-outline"></ion-icon>
+          </ion-fab-button>
+          <ion-fab-button color="secondary" (click)="showToast('¡Compartir!')">
+            <ion-icon name="share-social-outline"></ion-icon>
+          </ion-fab-button>
+          <ion-fab-button color="danger" (click)="showToast('¡Favorito!')">
+            <ion-icon name="heart-outline"></ion-icon>
+          </ion-fab-button>
+        </div>
+      </div>
+    </div>
+    }
+
+    <!-- ==================== 13. GRID ==================== -->
+    @if (isVisible('grid', 'navegacion')) {
+    <div class="demo-card">
+      <div class="demo-header">
+        <div class="demo-title">
+          <span class="comp-number">13</span>
+          <strong>Grid</strong>
+          <code>&lt;ion-grid&gt;</code>
+        </div>
+        <ion-badge color="secondary">Navegación</ion-badge>
+      </div>
+      <div class="demo-body">
+        <p class="demo-desc">Sistema de rejilla responsiva (Grid de 12 columnas):</p>
+        <ion-grid class="sample-grid">
+          <ion-row>
+            <ion-col size="12" class="col-box primary-box">ion-col size="12" (Ancho Completo)</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="6" class="col-box secondary-box">size="6" (50%)</ion-col>
+            <ion-col size="6" class="col-box secondary-box">size="6" (50%)</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="4" class="col-box tertiary-box">size="4"</ion-col>
+            <ion-col size="4" class="col-box tertiary-box">size="4"</ion-col>
+            <ion-col size="4" class="col-box tertiary-box">size="4"</ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+    </div>
+    }
+
+    <!-- ==================== 14. ICONS ==================== -->
+    @if (isVisible('icons', 'datos')) {
+    <div class="demo-card">
+      <div class="demo-header">
+        <div class="demo-title">
+          <span class="comp-number">14</span>
+          <strong>Icons</strong>
+          <code>&lt;ion-icon&gt;</code>
+        </div>
+        <ion-badge color="warning">Estructura & Datos</ion-badge>
+      </div>
+      <div class="demo-body">
+        <p class="demo-desc">Iconos vectoriales estilizados de Ionicons:</p>
+        <div class="icons-showroom">
+          <div class="icon-pill"><ion-icon name="rocket-outline" color="primary"></ion-icon><span>Rocket</span></div>
+          <div class="icon-pill"><ion-icon name="heart-outline" color="danger"></ion-icon><span>Heart</span></div>
+          <div class="icon-pill"><ion-icon name="star-outline" color="warning"></ion-icon><span>Star</span></div>
+          <div class="icon-pill"><ion-icon name="sparkles-outline" color="tertiary"></ion-icon><span>Sparkles</span>
+          </div>
+          <div class="icon-pill"><ion-icon name="flash-outline" color="success"></ion-icon><span>Flash</span></div>
+          <div class="icon-pill"><ion-icon name="color-palette-outline"
+              color="secondary"></ion-icon><span>Palette</span></div>
+        </div>
+      </div>
+    </div>
+    }
+
+    <!-- ==================== 15. INFINITE SCROLL ==================== -->
+    @if (isVisible('infinite scroll', 'datos')) {
+    <div class="demo-card">
+      <div class="demo-header">
+        <div class="demo-title">
+          <span class="comp-number">15</span>
+          <strong>Infinite Scroll</strong>
+          <code>&lt;ion-infinite-scroll&gt;</code>
+        </div>
+        <ion-badge color="tertiary">Estructura & Datos</ion-badge>
+      </div>
+      <div class="demo-body">
+        <p class="demo-desc">Carga asíncrona infinita de datos al hacer scroll:</p>
+        <ion-list [inset]="true" class="inner-list">
+          @for (item of infiniteItems; track item) {
+          <ion-item>
+            <ion-icon name="checkmark-circle-outline" slot="start" color="success"></ion-icon>
+            <ion-label>{{ item }}</ion-label>
+          </ion-item>
+          }
+        </ion-list>
+        <ion-button expand="block" fill="outline" size="small" (click)="addMoreInfiniteItems()">
+          <ion-icon slot="start" name="infinite-outline"></ion-icon>
+          Simular Carga de Más Elementos
+        </ion-button>
+      </div>
+    </div>
+    }
+
+    <!-- ==================== 16. INPUTS ==================== -->
+    @if (isVisible('input', 'formularios')) {
+    <div class="demo-card">
+      <div class="demo-header">
+        <div class="demo-title">
+          <span class="comp-number">16</span>
+          <strong>Inputs</strong>
+          <code>&lt;ion-input&gt;</code>
+        </div>
+        <ion-badge color="primary">Formularios</ion-badge>
+      </div>
+      <div class="demo-body">
+        <p class="demo-desc">Campos de texto con etiquetas flotantes y vinculación en tiempo real:</p>
+        <ion-list [inset]="true" class="inner-list">
+          <ion-item>
+            <ion-input label="Nombre completo" labelPlacement="floating" [(ngModel)]="textInputVal" [clearInput]="true"
+              placeholder="Ingresa tu nombre"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input label="Correo Electrónico" type="email" labelPlacement="floating" [(ngModel)]="emailInputVal"
+              placeholder="ejemplo@correo.com"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input label="Contraseña" type="password" labelPlacement="floating"
+              [(ngModel)]="passwordInputVal"></ion-input>
+          </ion-item>
+        </ion-list>
+        <ion-note class="active-note">Texto en vivo: <strong>{{ textInputVal }}</strong></ion-note>
+      </div>
+    </div>
+    }
+
+    <!-- ==================== 17. ITEM ==================== -->
+    @if (isVisible('item', 'datos')) {
+    <div class="demo-card">
+      <div class="demo-header">
+        <div class="demo-title">
+          <span class="comp-number">17</span>
+          <strong>Item</strong>
+          <code>&lt;ion-item&gt;</code>
+        </div>
+        <ion-badge color="secondary">Estructura & Datos</ion-badge>
+      </div>
+      <div class="demo-body">
+        <p class="demo-desc">Filas compuestas con slots (start, end), iconos y notas:</p>
+        <ion-list [inset]="true" class="inner-list">
+          <ion-item [button]="true" (click)="showToast('Clic en Item 1')">
+            <ion-icon slot="start" name="person-circle-outline" color="primary"></ion-icon>
+            <ion-label>
+              <h2>Perfil de Estudiante</h2>
+              <p>Ingeniería de Sistemas</p>
+            </ion-label>
+            <ion-note slot="end">Activo</ion-note>
+          </ion-item>
+          <ion-item [button]="true" (click)="showToast('Clic en Item 2')">
+            <ion-icon slot="start" name="mail-outline" color="secondary"></ion-icon>
+            <ion-label>Bandeja de Entrada</ion-label>
+            <ion-badge slot="end" color="danger">3 Nuevos</ion-badge>
+          </ion-item>
+        </ion-list>
+      </div>
+    </div>
+    }
+
+    <!-- ==================== 18. LIST ==================== -->
+    @if (isVisible('list', 'datos')) {
+    <div class="demo-card">
+      <div class="demo-header">
+        <div class="demo-title">
+          <span class="comp-number">18</span>
+          <strong>List</strong>
+          <code>&lt;ion-list&gt;</code>
+        </div>
+        <ion-badge color="primary">Estructura & Datos</ion-badge>
+      </div>
+      <div class="demo-body">
+        <p class="demo-desc">Contenedor de listas con cabecera y divisores:</p>
+        <ion-list [inset]="true" class="inner-list">
+          <ion-list-header>
+            <ion-label>CURSOS MATRICULADOS</ion-label>
+          </ion-list-header>
+          <ion-item><ion-label>Desarrollo Móvil Híbrido</ion-label></ion-item>
+          <ion-item><ion-label>Arquitectura de Software</ion-label></ion-item>
+          <ion-item><ion-label>Bases de Datos Avanzadas</ion-label></ion-item>
+        </ion-list>
+      </div>
+    </div>
+    }
+
+    <!-- ==================== 19. MEDIA (AVATAR, THUMBNAIL, IMG) ==================== -->
+    @if (isVisible('media', 'datos')) {
+    <div class="demo-card">
+      <div class="demo-header">
+        <div class="demo-title">
+          <span class="comp-number">19</span>
+          <strong>Media (Avatar, Img, Thumbnail)</strong>
+          <code>&lt;ion-avatar&gt;, &lt;ion-thumbnail&gt;</code>
+        </div>
+        <ion-badge color="tertiary">Estructura & Datos</ion-badge>
+      </div>
+      <div class="demo-body">
+        <p class="demo-desc">Componentes para imágenes circulares y cuadradas:</p>
+        <div class="media-row">
+          <div class="media-box">
+            <ion-avatar>
+              <img alt="Avatar" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+            </ion-avatar>
+            <span>ion-avatar</span>
+          </div>
+          <div class="media-box">
+            <ion-thumbnail>
+              <img alt="Thumbnail" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+            </ion-thumbnail>
+            <span>ion-thumbnail</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+
+    <!-- ==================== 20. MENU ==================== -->
+    @if (isVisible('menu', 'navegacion')) {
+    <div class="demo-card">
+      <div class="demo-header">
+        <div class="demo-title">
+          <span class="comp-number">20</span>
+          <strong>Menu</strong>
+          <code>&lt;ion-menu&gt;</code>
+        </div>
+        <ion-badge color="medium">Navegación</ion-badge>
+      </div>
+      <div class="demo-body">
+        <p class="demo-desc">Panel lateral de navegación deslizante (Drawer):</p>
+        <div class="menu-preview-box">
+          <ion-icon name="menu-outline" class="big-icon" color="primary"></ion-icon>
+          <div>
+            <strong>Menú Deslizante Integrado</strong>
+            <p>El componente <code>&lt;ion-menu&gt;</code> provee navegación lateral adaptable a móviles y escritorio.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+
+    <!-- ==================== 21. MODAL ==================== -->
+    @if (isVisible('modal', 'feedback')) {
+    <div class="demo-card">
+      <div class="demo-header">
+        <div class="demo-title">
+          <span class="comp-number">21</span>
+          <strong>Modal</strong>
+          <code>&lt;ion-modal&gt;</code>
+        </div>
+        <ion-badge color="secondary">Feedback</ion-badge>
+      </div>
+      <div class="demo-body">
+        <p class="demo-desc">Ventana modal superpuesta interactiva:</p>
+        <ion-button expand="block" color="secondary" (click)="isModalOpen = true">
+          <ion-icon slot="start" name="open-outline"></ion-icon>
+          Abrir Modal Demostrativo
+        </ion-button>
+
+        <ion-modal [isOpen]="isModalOpen" (didDismiss)="isModalOpen = false">
+          <ng-template>
+            <ion-header>
+              <ion-toolbar color="primary">
+                <ion-title>Modal Interactivo</ion-title>
+                <ion-buttons slot="end">
+                  <ion-button (click)="isModalOpen = false">
+                    <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+                  </ion-button>
+                </ion-buttons>
+              </ion-toolbar>
+            </ion-header>
+            <ion-content class="ion-padding">
+              <h3>¡Hola Profesor! 👋</h3>
+              <p>Este es el componente <code>&lt;ion-modal&gt;</code> funcionando en vivo dentro de la aplicación.</p>
+              <ion-button expand="block" color="primary" (click)="isModalOpen = false">
+                Cerrar Ventana Modal
+              </ion-button>
+            </ion-content>
+          </ng-template>
+        </ion-modal>
+      </div>
+    </div>
+    }
+
+    <!-- ==================== 22. NAVIGATION (NAV) ==================== -->
+    @if (isVisible('navigation', 'navegacion')) {
+    <div class="demo-card">
+      <div class="demo-header">
+        <div class="demo-title">
+          <span class="comp-number">22</span>
+          <strong>Navigation (Nav)</strong>
+          <code>&lt;ion-nav&gt;</code>
+        </div>
+        <ion-badge color="primary">Navegación</ion-badge>
+      </div>
+      <div class="demo-body">
+        <p class="demo-desc">Controlador de navegación push/pop por pilas de vistas.</p>
+        <div class="nav-demo-box">
+          <ion-icon name="navigate-outline" color="primary" class="big-icon"></ion-icon>
+          <span>Control de navegación jerárquica nativa con transiciones iOS y Android.</span>
+        </div>
+      </div>
+    </div>
+    }
+
+    <!-- ==================== 23. POPOVER ==================== -->
+    @if (isVisible('popover', 'feedback')) {
+    <div class="demo-card">
+      <div class="demo-header">
+        <div class="demo-title">
+          <span class="comp-number">23</span>
+          <strong>Popover</strong>
+          <code>&lt;ion-popover&gt;</code>
+        </div>
+        <ion-badge color="warning">Feedback</ion-badge>
+      </div>
+      <div class="demo-body">
+        <p class="demo-desc">Cuadro contextual flotante anclado a un botón:</p>
+        <ion-button id="popover-trigger" expand="block" color="warning">
+          <ion-icon slot="start" name="chatbubble-ellipses-outline"></ion-icon>
+          Abrir Popover
+        </ion-button>
+        <ion-popover trigger="popover-trigger" [dismissOnSelect]="true">
+          <ng-template>
+            <ion-content class="ion-padding">
+              <ion-list lines="none">
+                <ion-item [button]="true" (click)="showToast('Opción 1 seleccionada')">Opción 1</ion-item>
+                <ion-item [button]="true" (click)="showToast('Opción 2 seleccionada')">Opción 2</ion-item>
+                <ion-item [button]="true" (click)="showToast('Configuración')">Configuración</ion-item>
+              </ion-list>
+            </ion-content>
+          </ng-template>
+        </ion-popover>
+      </div>
+    </div>
+    }
+
+    <!-- ==================== 24. PROGRESS INDICATORS ==================== -->
+    @if (isVisible('progress', 'feedback')) {
+    <div class="demo-card">
+      <div class="demo-header">
+        <div class="demo-title">
+          <span class="comp-number">24</span>
+          <strong>Progress Indicators</strong>
+          <code>&lt;ion-progress-bar&gt;, &lt;ion-spinner&gt;</code>
+        </div>
+        <ion-badge color="success">Feedback</ion-badge>
+      </div>
+      <div class="demo-body">
+        <p class="demo-desc">Barra de progreso determinada ({{ (progressValue * 100) | number:'1.0-0' }}%):</p>
+        <ion-progress-bar [value]="progressValue" color="primary"></ion-progress-bar>
+
+        <p class="demo-desc ion-margin-top">Barra de progreso indeterminada (Loading):</p>
+        <ion-progress-bar type="indeterminate" color="secondary"></ion-progress-bar>
+
+        <p class="demo-desc ion-margin-top">Spinners circulares animados:</p>
+        <div class="spinners-row">
+          <ion-spinner name="crescent" color="primary"></ion-spinner>
+          <ion-spinner name="bubbles" color="secondary"></ion-spinner>
+          <ion-spinner name="lines" color="tertiary"></ion-spinner>
+          <ion-spinner name="dots" color="success"></ion-spinner>
+          <ion-spinner name="circular" color="danger"></ion-spinner>
+        </div>
+      </div>
+    </div>
+    }
+
+    <!-- ==================== 25. RADIO ==================== -->
+    @if (isVisible('radio', 'formularios')) {
+    <div class="demo-card">
+      <div class="demo-header">
+        <div class="demo-title">
+          <span class="comp-number">25</span>
+          <strong>Radio</strong>
+          <code>&lt;ion-radio-group&gt;, &lt;ion-radio&gt;</code>
+        </div>
+        <ion-badge color="primary">Formularios</ion-badge>
+      </div>
+      <div class="demo-body">
+        <p class="demo-desc">Selección única y mutuamente excluyente:</p>
+        <ion-radio-group [(ngModel)]="selectedFramework">
+          <ion-list [inset]="true" class="inner-list">
+            <ion-item>
+              <ion-radio value="ionic-angular" justify="space-between">Ionic con Angular</ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-radio value="ionic-react" justify="space-between">Ionic con React</ion-radio>
+            </ion-item>
+            <ion-item>
+              <ion-radio value="ionic-vue" justify="space-between">Ionic con Vue</ion-radio>
+            </ion-item>
+          </ion-list>
+        </ion-radio-group>
+        <ion-note class="active-note">Selección actual: <strong>{{ selectedFramework }}</strong></ion-note>
+      </div>
+    </div>
+    }
+
+    <!-- ==================== 26. RANGE ==================== -->
+    @if (isVisible('range', 'formularios')) {
+    <div class="demo-card">
+      <div class="demo-header">
+        <div class="demo-title">
+          <span class="comp-number">26</span>
+          <strong>Range</strong>
+          <code>&lt;ion-range&gt;</code>
+        </div>
+        <ion-badge color="tertiary">Formularios</ion-badge>
+      </div>
+      <div class="demo-body">
+        <p class="demo-desc">Control deslizante con pines interactivos:</p>
+        <ion-range [(ngModel)]="sliderValue" [min]="0" [max]="100" [pin]="true" [ticks]="true" [snaps]="true"
+          [step]="10" color="tertiary">
+          <ion-icon slot="start" name="volume-mute-outline"></ion-icon>
+          <ion-icon slot="end" name="volume-high-outline"></ion-icon>
+        </ion-range>
+        <ion-note class="active-note">Valor del slider: <strong>{{ sliderValue }}%</strong></ion-note>
+      </div>
+    </div>
+    }
+
+    <!-- ==================== 27. REFRESHER ==================== -->
+    @if (isVisible('refresher', 'feedback')) {
+    <div class="demo-card">
+      <div class="demo-header">
+        <div class="demo-title">
+          <span class="comp-number">27</span>
+          <strong>Refresher</strong>
+          <code>&lt;ion-refresher&gt;</code>
+        </div>
+        <ion-badge color="secondary">Feedback</ion-badge>
+      </div>
+      <div class="demo-body">
+        <p class="demo-desc">Gesto de arrastrar hacia abajo (Pull-to-refresh) activo en la parte superior de la vista.
+        </p>
+        <ion-button expand="block" fill="outline" color="secondary"
+          (click)="showToast('¡Desliza la pantalla hacia abajo para activar el IonRefresher!')">
+          <ion-icon slot="start" name="refresh-circle-outline"></ion-icon>
+          ¿Cómo probar el Refresher?
+        </ion-button>
+      </div>
+    </div>
+    }
+
+    <!-- ==================== 28. REORDER ==================== -->
+    @if (isVisible('reorder', 'datos')) {
+    <div class="demo-card">
+      <div class="demo-header">
+        <div class="demo-title">
+          <span class="comp-number">28</span>
+          <strong>Reorder</strong>
+          <code>&lt;ion-reorder-group&gt;, &lt;ion-reorder&gt;</code>
+        </div>
+        <ion-badge color="medium">Estructura & Datos</ion-badge>
+      </div>
+      <div class="demo-body">
+        <p class="demo-desc">Arrastra y suelta las barras a la derecha para reordenar en vivo:</p>
+        <ion-reorder-group [disabled]="false" (ionItemReorder)="handleReorder($event)">
+          @for (item of reorderItems; track item) {
+          <ion-item>
+            <ion-label>{{ item }}</ion-label>
+            <ion-reorder slot="end"></ion-reorder>
+          </ion-item>
+          }
+        </ion-reorder-group>
+      </div>
+    </div>
+    }
+
+    <!-- ==================== 29. ROUTING (ROUTER) ==================== -->
+    @if (isVisible('routing', 'navegacion')) {
+    <div class="demo-card">
+      <div class="demo-header">
+        <div class="demo-title">
+          <span class="comp-number">29</span>
+          <strong>Routing (Router)</strong>
+          <code>&lt;ion-router-link&gt;, routerLink</code>
+        </div>
+        <ion-badge color="primary">Navegación</ion-badge>
+      </div>
+      <div class="demo-body">
+        <p class="demo-desc">Navegación declarativa entre pestañas y rutas:</p>
+        <ion-button routerLink="/tabs/tab2" expand="block" color="primary">
+          <ion-icon slot="start" name="git-branch-outline"></ion-icon>
+          Navegar a Tab 2 mediante Router
+        </ion-button>
+      </div>
+    </div>
+    }
+
+    <!-- ==================== 30. SEARCHBAR ==================== -->
+    @if (isVisible('searchbar', 'formularios')) {
+    <div class="demo-card">
+      <div class="demo-header">
+        <div class="demo-title">
+          <span class="comp-number">30</span>
+          <strong>Searchbar</strong>
+          <code>&lt;ion-searchbar&gt;</code>
+        </div>
+        <ion-badge color="secondary">Formularios</ion-badge>
+      </div>
+      <div class="demo-body">
+        <p class="demo-desc">Barra de búsqueda con animación y botón de limpiar:</p>
+        <ion-searchbar [(ngModel)]="sampleSearchText" placeholder="Escribe para buscar..."
+          animated="true"></ion-searchbar>
+        <ion-note class="active-note">Texto buscado: <strong>{{ sampleSearchText || '(vacío)' }}</strong></ion-note>
+      </div>
+    </div>
+    }
+
+    <!-- ==================== 31. SEGMENT ==================== -->
+    @if (isVisible('segment', 'navegacion')) {
+    <div class="demo-card">
+      <div class="demo-header">
+        <div class="demo-title">
+          <span class="comp-number">31</span>
+          <strong>Segment</strong>
+          <code>&lt;ion-segment&gt;</code>
+        </div>
+        <ion-badge color="tertiary">Navegación</ion-badge>
+      </div>
+      <div class="demo-body">
+        <p class="demo-desc">Pestañas para alternar vistas interactivamente:</p>
+        <ion-segment [(ngModel)]="demoSegment" mode="ios">
+          <ion-segment-button value="preview">
+            <ion-label>Vista Previa</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="code">
+            <ion-label>Código</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="docs">
+            <ion-label>Documentación</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+
+        <div class="segment-result-box ion-padding ion-margin-top">
+          @if (demoSegment === 'preview') {
+          <p>🟢 Mostrando panel de <strong>Vista Previa</strong> en vivo.</p>
+          } @else if (demoSegment === 'code') {
+          <p>💻 Mostrando panel de <strong>Código Fuente</strong>.</p>
+          } @else {
+          <p>📚 Mostrando panel de <strong>Documentación</strong>.</p>
+          }
+        </div>
+      </div>
+    </div>
+    }
+
+    <!-- ==================== 32. SELECT ==================== -->
+    @if (isVisible('select', 'formularios')) {
+    <div class="demo-card">
+      <div class="demo-header">
+        <div class="demo-title">
+          <span class="comp-number">32</span>
+          <strong>Select</strong>
+          <code>&lt;ion-select&gt;</code>
+        </div>
+        <ion-badge color="warning">Formularios</ion-badge>
+      </div>
+      <div class="demo-body">
+        <p class="demo-desc">Menú desplegable de opciones:</p>
+        <ion-list [inset]="true" class="inner-list">
+          <ion-item>
+            <ion-select label="Tema de la Aplicación" [(ngModel)]="selectedTheme" interface="action-sheet">
+              <ion-select-option value="light">Modo Claro ☀️</ion-select-option>
+              <ion-select-option value="dark">Modo Oscuro 🌙</ion-select-option>
+              <ion-select-option value="system">Automático (Sistema)</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-list>
+        <ion-note class="active-note">Tema seleccionado: <strong>{{ selectedTheme }}</strong></ion-note>
+      </div>
+    </div>
+    }
+
+    <!-- ==================== 33. TABS ==================== -->
+    @if (isVisible('tabs', 'navegacion')) {
+    <div class="demo-card">
+      <div class="demo-header">
+        <div class="demo-title">
+          <span class="comp-number">33</span>
+          <strong>Tabs</strong>
+          <code>&lt;ion-tabs&gt;, &lt;ion-tab-bar&gt;</code>
+        </div>
+        <ion-badge color="primary">Navegación</ion-badge>
+      </div>
+      <div class="demo-body">
+        <p class="demo-desc">La barra inferior fija de esta aplicación es el componente <code>&lt;ion-tabs&gt;</code>,
+          el cual permite alternar entre Tab 1, Tab 2 y Tab 3.</p>
+        <div class="tabs-mock-indicator">
+          <ion-icon name="browsers-outline" class="big-icon" color="primary"></ion-icon>
+          <span>Barra de pestañas activa en la parte inferior.</span>
+        </div>
+      </div>
+    </div>
+    }
+
+    <!-- ==================== 34. TOAST ==================== -->
+    @if (isVisible('toast', 'feedback')) {
+    <div class="demo-card">
+      <div class="demo-header">
+        <div class="demo-title">
+          <span class="comp-number">34</span>
+          <strong>Toast</strong>
+          <code>&lt;ion-toast&gt;</code>
+        </div>
+        <ion-badge color="success">Feedback</ion-badge>
+      </div>
+      <div class="demo-body">
+        <p class="demo-desc">Notificación flotante temporal no intrusiva:</p>
+        <ion-button expand="block" color="success" (click)="isToastOpen = true">
+          <ion-icon slot="start" name="notifications-outline"></ion-icon>
+          Lanzar Notificación Toast
+        </ion-button>
+        <ion-toast [isOpen]="isToastOpen" [message]="toastMessage" [duration]="3000" icon="checkmark-circle-outline"
+          (didDismiss)="isToastOpen = false"></ion-toast>
+      </div>
+    </div>
+    }
+
+    <!-- ==================== 35. TOGGLE ==================== -->
+    @if (isVisible('toggle', 'formularios')) {
+    <div class="demo-card">
+      <div class="demo-header">
+        <div class="demo-title">
+          <span class="comp-number">35</span>
+          <strong>Toggle</strong>
+          <code>&lt;ion-toggle&gt;</code>
+        </div>
+        <ion-badge color="success">Formularios</ion-badge>
+      </div>
+      <div class="demo-body">
+        <p class="demo-desc">Interruptores de estado binario (Switches):</p>
+        <ion-list [inset]="true" class="inner-list">
+          <ion-item>
+            <ion-toggle [(ngModel)]="toggleState" color="primary">
+              Modo Notificaciones: {{ toggleState ? 'Activado' : 'Desactivado' }}
+            </ion-toggle>
+          </ion-item>
+          <ion-item>
+            <ion-toggle [(ngModel)]="soundToggleState" color="success">
+              Sonidos del Sistema: {{ soundToggleState ? 'Activado' : 'Desactivado' }}
+            </ion-toggle>
+          </ion-item>
+        </ion-list>
+      </div>
+    </div>
+    }
+
+    <!-- ==================== 36. TOOLBAR ==================== -->
+    @if (isVisible('toolbar', 'navegacion')) {
+    <div class="demo-card">
+      <div class="demo-header">
+        <div class="demo-title">
+          <span class="comp-number">36</span>
+          <strong>Toolbar</strong>
+          <code>&lt;ion-toolbar&gt;</code>
+        </div>
+        <ion-badge color="primary">Navegación</ion-badge>
+      </div>
+      <div class="demo-body">
+        <p class="demo-desc">Barra de herramientas interna con botones y título:</p>
+        <ion-toolbar color="secondary" class="sample-toolbar">
+          <ion-buttons slot="start">
+            <ion-button><ion-icon name="menu-outline"></ion-icon></ion-button>
+          </ion-buttons>
+          <ion-title size="small">Toolbar Personalizada</ion-title>
+          <ion-buttons slot="end">
+            <ion-button><ion-icon name="star-outline"></ion-icon></ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </div>
+    </div>
+    }
+
+    <!-- ==================== 37. TYPOGRAPHY ==================== -->
+    @if (isVisible('typography', 'datos') || isVisible('text', 'datos')) {
+    <div class="demo-card">
+      <div class="demo-header">
+        <div class="demo-title">
+          <span class="comp-number">37</span>
+          <strong>Typography (Text)</strong>
+          <code>&lt;ion-text&gt;</code>
+        </div>
+        <ion-badge color="medium">Estructura & Datos</ion-badge>
+      </div>
+      <div class="demo-body">
+        <p class="demo-desc">Estilos tipográficos con colores de tema:</p>
+        <ion-text color="primary">
+          <h3>&lt;h3 color="primary"&gt; Texto Primario</h3>
+        </ion-text>
+        <ion-text color="secondary">
+          <h4>&lt;h4 color="secondary"&gt; Texto Secundario</h4>
+        </ion-text>
+        <ion-text color="success">
+          <p><strong>&lt;p color="success"&gt;</strong> Operación exitosa y validada.</p>
+        </ion-text>
+        <ion-text color="danger">
+          <p><strong>&lt;p color="danger"&gt;</strong> Advertencia o mensaje de error.</p>
+        </ion-text>
+      </div>
+    </div>
+    }
+
+  </div>
+
+  <!-- FAB Flotante en la esquina de la pantalla para demostración -->
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end" class="main-fab">
+    <ion-fab-button color="primary">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button color="secondary" (click)="showToast('FAB: Compartir')">
+        <ion-icon name="share-social-outline"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="danger" (click)="showToast('FAB: Me Gusta')">
+        <ion-icon name="heart-outline"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="success" (click)="showToast('FAB: Llamar')">
+        <ion-icon name="call-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+</ion-content>
