@@ -1,0 +1,12 @@
+<ion-content class="ar-content">
+  <a-scene embedded
+           arjs="sourceType: webcam; debugUIEnabled: false;"
+           vr-mode-ui="enabled: false">
+    <!-- Cuando la cámara vea el marcador "hiro", aparece el cubo -->
+    <a-marker preset="hiro">
+      <a-box position="0 0.5 0" material="color: #2ECC71"></a-box>
+    </a-marker>
+    <!-- La cámara -->
+    <a-entity camera></a-entity>
+  </a-scene>
+</ion-content>
